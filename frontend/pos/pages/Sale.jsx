@@ -1,7 +1,7 @@
 import MasterPage from "../pages/MasterPage";
 import QueryContext from "../context/QueryContext";
 import { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import axios from "../src/api";
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "../components/Modal";
 
@@ -128,16 +128,14 @@ function Sale() {
             <div className="mt-3">
               <button
                 className={`btn btn-sm rounded-full mr-2 ${selectType == "ALL" && "btn-primary"}`}
-                onClick={() => setSelectType("ALL")}
-              >
+                onClick={() => setSelectType("ALL")}>
                 ALL
               </button>
               {productType.map((item) => (
                 <button
                   className={`btn btn-sm rounded-full mr-2 ${selectType == item._id && "btn-primary"}`}
                   key={item._id}
-                  onClick={() => setSelectType(item._id)}
-                >
+                  onClick={() => setSelectType(item._id)}>
                   {item.ProductType}
                 </button>
               ))}
@@ -150,8 +148,7 @@ function Sale() {
                 <div
                   key={item._id}
                   className="border border-gray-300 flex flex-col justify-center items-center rounded-md hover:bg-gray-200 hover:cursor-pointer"
-                  onClick={() => handleCart(item)}
-                >
+                  onClick={() => handleCart(item)}>
                   <img
                     className="w-28"
                     src={`${import.meta.env.VITE_API_URL}/upload/${item.Picture}`}
@@ -172,8 +169,7 @@ function Sale() {
             <p>ទំនិញកម្មង់</p>
             <button
               className="text-error hover:bg-red-100 hover:cursor-pointer p-2 rounded-lg"
-              onClick={handleClearCart}
-            >
+              onClick={handleClearCart}>
               ជម្រះ
             </button>
           </div>
@@ -193,8 +189,7 @@ function Sale() {
                     <td className="p-1 flex justify-center">
                       <button
                         className="btn btn-sm"
-                        onClick={() => handleQty(item.prod_id, -1)}
-                      >
+                        onClick={() => handleQty(item.prod_id, -1)}>
                         -
                       </button>
                       <input
@@ -206,8 +201,7 @@ function Sale() {
                       />
                       <button
                         className="btn btn-sm"
-                        onClick={() => handleQty(item.prod_id, 1)}
-                      >
+                        onClick={() => handleQty(item.prod_id, 1)}>
                         +
                       </button>
                     </td>
