@@ -31,9 +31,9 @@ function Table({ deleteHandler, editHandler, columns, rows, endPoint }) {
                   {rows.map((row, index) => (
 
                     <td key={index}>
-                      {(row == 'Picture' && item[row]) ? <img className="w-14 h-14 rounded-2xl" src={`http://localhost:8000/upload/${item[row]}`} onError={(e) => {
+                      {(row == 'Picture' && item[row]) ? <img className="w-14 h-14 rounded-2xl" src={`${import.meta.env.VITE_API_URL}/upload/${item[row]}`} onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = `http://localhost:8000/upload/image.png`
+                        e.target.src = `${import.meta.env.VITE_API_URL}/upload/image.png`
                       }} /> : (row == 'ProductType' && item[row]) ? item[row]['ProductType'] || item[row] : item[row]}
                     </td>
                   ))}
