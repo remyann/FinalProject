@@ -1,0 +1,9 @@
+1 cd frontend
+2 npm create vite@latest
+
+3 npm install tailwindcss @tailwindcss/vite
+
+4. npm install daisyui@latest
+5. npm install react-icons
+
+6. npm install axios
