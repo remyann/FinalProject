@@ -14,7 +14,7 @@ function ProductTypeForm({ defaultData, handleView, isEdit }) {
         console.log(defaultData);
         //   put: update item
         const id = defaultData._id;
-        const url = "http://localhost:8000/producttype/" + id;
+        const url = import.meta.env.VITE_API_URL + "/producttype/" + id;
         const result = await axios.put(url, formData);
         toast.success("Item has been updated", {
           duration: 4000,
@@ -23,7 +23,7 @@ function ProductTypeForm({ defaultData, handleView, isEdit }) {
         handleView();
       } else {
         //   post: add new item
-        const url = "http://localhost:8000/producttype";
+        const url = import.meta.env.VITE_API_URL + "/producttype";
         const result = await axios.post(url, formData);
         toast.success("Item has been added", {
           duration: 4000,

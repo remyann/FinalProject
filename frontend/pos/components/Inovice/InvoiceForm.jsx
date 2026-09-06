@@ -14,7 +14,7 @@ function InvoiceForm() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const url = `http://localhost:8000/${endpoint}`;
+      const url = `${import.meta.env.VITE_API_URL}/${endpoint}`;
       const result = axios.post(url, formData);
       toast.success(result.data.message);
     } catch (error) {

@@ -17,7 +17,7 @@ function Product() {
   async function handleDelete(id) { }
 
   const deleteHandler = async (id) => {
-    const result = await axios.delete('http://localhost:8000/product/' + id)
+    const result = await axios.delete('${import.meta.env.VITE_API_URL}/product/' + id)
     toast.success(result.data.message, { duration: 4000, position: 'top-right' })
   };
   const [defaultData, setDefaultData] = useState({})

@@ -75,7 +75,7 @@ function Sale() {
   const getProductType = async () => {
     try {
       const resultProductType = await axios.get(
-        "http://localhost:8000/producttype",
+        import.meta.env.VITE_API_URL + "/producttype",
       );
       setProductType(resultProductType.data.data);
     } catch (error) {
@@ -85,7 +85,7 @@ function Sale() {
   const getProduct = async () => {
     try {
       const resultProduct = await axios.get(
-        "http://localhost:8000/sale?type=" + selectType,
+        import.meta.env.VITE_API_URL + "/sale?type=" + selectType,
       );
       setProduct(resultProduct.data.data);
     } catch (error) {
@@ -154,7 +154,7 @@ function Sale() {
                 >
                   <img
                     className="w-28"
-                    src={`http://localhost:8000/upload/${item.Picture}`}
+                    src={`${import.meta.env.VITE_API_URL}/upload/${item.Picture}`}
                   />
                   <p className="text-center">{item.ProductName}</p>
                   <p className="text-gray-600">{item.NumberInStock}</p>

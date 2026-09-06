@@ -7,7 +7,7 @@ function App() {
   useEffect(() => {
     async function getUser() {
       try {
-        const result = await axios.get("http://localhost:8000/product");
+        const result = await axios.get(import.meta.env.VITE_API_URL + "/product");
         console.log(result);
         setProductData(result.data.data);
       } catch (error) {

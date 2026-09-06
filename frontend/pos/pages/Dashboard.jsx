@@ -8,7 +8,7 @@ function Dashboard() {
   useEffect(() => {
     async function getDashboardData() {
       try {
-        const result = await axios.get("http://localhost:8000/dashboard");
+        const result = await axios.get(import.meta.env.VITE_API_URL + "/dashboard");
         console.log(result);
         setdashboardData(result.data.data);
       } catch (error) {
