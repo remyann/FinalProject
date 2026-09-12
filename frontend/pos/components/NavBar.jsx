@@ -2,16 +2,16 @@ function NavBar() {
   return (
     <div className="navbar bg-green-600 shadow-sm">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl text-white">daisyUI</a>
+        <a className="btn btn-ghost text-xl text-white">MASRWE POS</a>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>Link</a>
+            <a>POS</a>
           </li>
           <li>
             <details>
-              <summary>Parent</summary>
+              <summary>ADMIN</summary>
               <ul className="bg-base-100 rounded-t-none p-2">
                 <li>
                   <a>Link 1</a>

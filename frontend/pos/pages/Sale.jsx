@@ -82,6 +82,7 @@ function Sale() {
       toast.error(error?.response?.data?.message);
     }
   };
+
   const getProduct = async () => {
     try {
       const resultProduct = await axios.get(
@@ -92,6 +93,7 @@ function Sale() {
       toast.error(error?.response?.data?.message);
     }
   };
+
 
   // when page loaded, for set label
   useEffect(() => {
@@ -106,14 +108,68 @@ function Sale() {
   }, [selectType]);
 
   const submitSale = async () => {
-    // submit cart to backend
-    // show modal
-    document.getElementById("my_modal_1").showModal();
+    try {
+      // check if cart is empty
+      if (cart.length === 0) {
+        toast.error("សូមជ្រើសរើសទំនិញមុនពេលធ្វើការទិញ");
+        return;
+      }
+      // sub cart to backend
+      const result = await axios.post(import.meta.env.VITE_API_URL + "/sale", {
+        cart,
+      });
+
+      const status = result.data.status;
+      if (status === "success") {
+        // setReceipt(result.data);
+        setCart([]);
+        getProduct();
+        toast.success("ការទិញបានជោគជ័យ");
+      } else {
+        toast.error("មានបញ្ហាក្នុងការទិញ");
+      }
+
+      console.log(result);
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    }
   };
 
   const handleQty = (pro_id, operation) => {
-    // find prod_id in cart
-    // qty = item.qty + operation (operation = -1)
+    // Pass a FUNCTION to setCart because our next cart depends on its old value.
+    // React supplies that function with prev: the latest pending state.
+    // Queued updates can then build on one another, including quick clicks.
+    // Do not expect the cart variable to change immediately after setCart.
+    setCart((prev) =>
+      // This arrow function has an expression body: it returns the result of
+      // prev.map(...).filter(...) without needing an explicit return statement.
+      prev.map((item) => {
+        // map() builds a NEW array by running this callback for each product.
+        // item is the product currently being visited, not necessarily clicked.
+        // !== means "is not equal to" without converting either value's type.
+        // An unrelated product is returned as-is; nothing below runs for it.
+        if (item.prod_id !== pro_id) return item;
+
+        // Only the matching product reaches this line.
+        // Add the operation: +1 increases quantity; -1 decreases quantity.
+        // Math.max(0, ...) chooses the larger number, preventing negatives.
+        const qty = Math.min(
+          Number.isFinite(item.stock) ? item.stock : Number.MAX_SAFE_INTEGER,
+          Math.max(0, item.qty + operation),
+        );
+
+        // Return a NEW object instead of changing the existing item directly.
+        // ...item copies its fields (ID, name, price, and so on).
+        // The properties written AFTER ...item replace the old qty and total.
+        // qty is shorthand for qty: qty, using the variable calculated above.
+        // Number() converts a price such as "12" into the number 12.
+        // Updating both qty and total keeps the displayed row price consistent.
+        return { ...item, qty, total: qty * Number(item.price) };
+      }).filter((item) => item.qty > 0),
+      // filter() keeps items for which the condition is true.
+      // A quantity of 0 fails qty > 0, so that product disappears from the cart.
+      // The resulting array becomes the next cart state; prev was not mutated.
+    );
   };
 
   return (
