@@ -1,4 +1,3 @@
-
 import MasterPage from "../pages/MasterPage";
 import QueryContext from "../context/QueryContext";
 import { useState, useEffect, useContext, useRef, useCallback } from "react";
@@ -138,7 +137,7 @@ function Sale() {
       if (status === "success") {
         // setReceipt(result.data);
         setShowReceipt(true);
-        setCart([]);
+        // setCart([]);
         getProduct();
         toast.success("ការទិញបានជោគជ័យ");
         document.getElementById("my_modal_1").showModal();
@@ -228,9 +227,7 @@ function Sale() {
 
             // Return a NEW object instead of changing the existing item directly.
             // ...item copies its fields (ID, name, price, and so on).
-            // The properties written AFTER ...item replace
-
-
+            // The properties written AFTER ...item replace the old qty and total.
             // qty is shorthand for qty: qty, using the variable calculated above.
             // Number() converts a price such as "12" into the number 12.
             // Updating both qty and total keeps the displayed row price consistent.
@@ -243,14 +240,19 @@ function Sale() {
     );
   };
 
+  const onCloseModal = () => {
+    setCart([]);
+    setShowReceipt(false);
+  };
+
   return (
-    <MasterPage>
+    <MasterPage showButton={false}>
       {/*
         Props pass data and functions from Sale (the parent) to Modal (the child).
         receipt contains the captured cart. onClose is a callback: Modal calls
         it when its dialog closes, and Sale resets receipt to null.
       */}
-      <Modal />
+      <Modal cart={cart} onCloseModal={onCloseModal} />
       <div className="flex gap-4">
         {/* Left */}
         <div className="w-[70%]">
@@ -328,8 +330,7 @@ function Sale() {
                     <td className="p-1 flex justify-center">
                       {/*
                         The arrow function waits for a click before calling handleQty.
-                        item.prod_id identifies THIS
-[9/12/2026 11:09 AM] Houy Narun: row; -1 means subtract one.
+                        item.prod_id identifies THIS row; -1 means subtract one.
                         Writing onClick={handleQty(...)} would call it during render.
                         type="button" prevents form submission if used inside a form.
                       */}

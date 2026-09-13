@@ -3,7 +3,7 @@ import Menu from "../components/Menu";
 import QueryContext from "../context/QueryContext";
 import { useContext } from "react";
 
-function MasterPage({ children }) {
+function MasterPage({ children, showLabel = true, showButton = true }) {
   const { showTable, Label, handleView } = useContext(QueryContext);
   return (
     <div>
@@ -13,11 +13,17 @@ function MasterPage({ children }) {
         {/* Content */}
         <div className="w-[80%] ml-auto mr-auto mt-1.5 ">
           <div className="flex justify-between items-center my-5">
-            <p className="text-2xl bold">{Label}</p>
+            <p
+              className="text-2xl bold"
+              style={{ display: showLabel ? "block" : "none" }}
+            >
+              {Label}
+            </p>
             <button
               className="btn btn-success text-white"
               type="button"
               onClick={handleView}
+              style={{ display: showButton ? "block" : "none" }}
             >
               {showTable ? "+បន្ថែមថ្មី" : "បង្ហាញតារាង"}
             </button>
